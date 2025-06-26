@@ -1,0 +1,16 @@
+{
+  "name": "socielmediabackend",
+  "version": "1.0.0",
+  "description": "Learning Backed from Chai aur Cade",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "type" : "module",
+  "author": "Shubh Goel",
+  "license": "ISC",
+  "dependencies": {
+    "dotnet": "^1.1.4",
+    "express": "^5.1.0"
+  }
+}
