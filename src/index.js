@@ -3,22 +3,50 @@
     => The above statement will throw error if using type:module if package.json
     import dotenv from "dotenv"
     dotenv.config({
-        path: './env'
+        path: './.env'
     })
 */
 
 import dotenv from "dotenv"
 // dotenv.config({
-//         path: './env'
+//         path: './.env'
 //     })   
 // I am getting undefined when using above code, so updating as below
 dotenv.config()
 
 import connectDB from "./db/index.js"; 
+import { app } from "./app.js";
 
 connectDB()
+    .then( () => {
+        app.listen(process.env.PORT || 8000, () => {
+            console.log(`Server is running ar ${process.env.PORT}`)
+        }).on("error", (error) => {
+            console.log("Server failed to run...", error)
+        }) 
+    } )
+    .catch((err) => {
+        console.log("MongoDb connection failed", err)
+    })
 
+/*
+    In our index.js file, we call the connectDB() function, which returns a Promise (because it's an async function). Since it's a Promise, 
+    we use:
 
+        .then() → to handle the case when the Promise resolves successfully, i.e., the database is connected.
+
+        .catch() → to handle the case when the Promise rejects, i.e., the connection fails.
+
+    Inside .then(), we start the Express server using app.listen(...), and attach a listener to the server’s "error" event to catch any runtime 
+    issues during startup.
+
+    app.listen() returns an instance of http.Server which emits events like
+        1. listening
+        2. error
+        3. close
+        4. connection (for tcp connections)
+
+*/
 
 /*
 import express from "express"
